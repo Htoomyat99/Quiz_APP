@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quiz_app/components/answer_button.dart';
 import 'package:flutter_quiz_app/data/question.dart';
+import 'package:flutter_quiz_app/pages/answer_screen.dart';
 // import 'package:flutter_quiz_app/modals/quiz_question.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,15 +14,27 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   var currentQuestionIndex = 0;
+  final List<String> answerList = [];
 
-  void answerQuestion() {
+  void answerQuestion(String answer) {
     if (currentQuestionIndex < questions.length - 1) {
-      setState(() {
-        currentQuestionIndex++;
-      });
+      setState(
+        () {
+          currentQuestionIndex++;
+        },
+      );
     } else {
-      debugPrint('object');
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => AnswerScreen(answerList: answerList),
+        ),
+      );
     }
+    setState(
+      () {
+        answerList.add(answer);
+      },
+    );
   }
 
   @override
@@ -40,7 +53,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               currentQuestion.text,
               style: GoogleFonts.lato(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -50,7 +63,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
             ...currentQuestion.getShuffleAnswer().map(
               (answer) {
-                return AnswerButton(onTap: answerQuestion, text: answer);
+                return AnswerButton(
+                    onTap: () {
+                      answerQuestion(answer);
+                    },
+                    text: answer);
               },
             )
           ],
