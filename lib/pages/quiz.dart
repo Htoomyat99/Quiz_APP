@@ -25,7 +25,6 @@ class _QuizState extends State<Quiz> {
 
   void chooseAnswer(String answer) {
     selectedAnswer.add(answer);
-
     if (selectedAnswer.length == questions.length) {
       setState(
         () {
@@ -33,6 +32,13 @@ class _QuizState extends State<Quiz> {
         },
       );
     }
+  }
+
+  void restartQuiz() {
+    setState(() {
+      selectedAnswer = [];
+      startScreen = 'quiz-screen';
+    });
   }
 
   @override
@@ -44,6 +50,7 @@ class _QuizState extends State<Quiz> {
     } else if (startScreen == 'result-screen') {
       startWidget = ResultScreen(
         chooseAnswer: selectedAnswer,
+        restartQuiz: restartQuiz,
       );
     } else {
       startWidget = QuestionScreen(onSelectAnswer: chooseAnswer);
