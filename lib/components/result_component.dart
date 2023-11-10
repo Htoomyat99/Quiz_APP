@@ -19,8 +19,8 @@ class ResultComponent extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
               color: questions[index].answers[0] == chooseAnswer[index]
-                  ? Colors.blue
-                  : Colors.red.shade700,
+                  ? Colors.lightGreenAccent
+                  : Colors.red.shade500,
               borderRadius: BorderRadius.circular(20)),
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 13),
           margin: const EdgeInsets.only(right: 20),
